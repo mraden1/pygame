@@ -2,7 +2,7 @@ import pygame as pg
 from pygame.locals import *
 from game_model import GameModel
 from score_model import Scoreboard
-from player_model import Player
+from player_controller import PlayerController
 from end_view import EndScreen
 from obstacle_model import Saw, Spike
 from start_controller import Start
@@ -13,7 +13,7 @@ import random
 class Game:
   def __init__(self):
     pg.init()
-    self.player = Player(200, 313, 64, 64, self) 
+    self.player_controller = PlayerController(self)
     self.scoreboard = Scoreboard(self)
     self.game_model = GameModel(self)
     self.obstacles = []

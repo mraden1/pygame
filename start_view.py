@@ -16,12 +16,6 @@ class StartScreen:
     self.win.blit(quit_button['text'], quit_button['rect'])
 
   def update(self):
-    self.bgX -= 1.4
-    self.bgX2 -= 1.4
-
-    if self.bgX < self.bg.get_width() * -1:
-      self.bgX = self.bg.get_width()
-    if self.bgX2 < self.bg.get_width() * -1:
-      self.bgX2 = self.bg.get_width()
+    pass
 
   

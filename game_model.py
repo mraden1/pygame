@@ -5,7 +5,7 @@ import os
 class GameModel:
   def __init__(self, game):
     self.game = game
-    self.player = game.player
+    self.player = game.player_controller
     self.WIDTH, self.HEIGHT = (800, 440)
     
     self.clock = pg.time.Clock()
@@ -36,7 +36,7 @@ class GameModel:
     self.bg, self.bgX, self.bgX2, self.win = self.manage_bg(self.bg, self.bgX, self.bgX2, self.win)
     self.manage_obstacles(game.obstacles)
     self.set_clock()
-    game.player.draw(self.win)
+    game.player_controller.update(self.win)
     self.win.blit(self.text, (700, 10))
     pg.display.flip()
 
@@ -84,10 +84,10 @@ class GameModel:
     elif event.type == pg.KEYDOWN:
       if event.key == pg.K_SPACE or event.key == pg.K_UP:
         print('up or space pressed')
-        if not (game.player.jumping):
-          game.player.jumping = True
+        if not (game.player_controller.player.jumping):
+          game.player_controller.player.jumping = True
 
       elif event.key == pg.K_DOWN:
         print('down presses')
-        if not (game.player.sliding):
-          game.player.sliding = True
+        if not (game.player_controller.player.sliding):
+          game.player_controller.player.sliding = True

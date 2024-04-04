@@ -2,16 +2,15 @@ import pygame as pg
 from pygame.locals import *
 import os
 
-class Player(object):
-  run = [pg.image.load(os.path.join('pygame\images', f'{x}.png')) for x in range(8, 16)]
+class Player(pg.sprite.Sprite):
   jump = [pg.image.load(os.path.join('pygame\images', f'{x}.png')) for x in range(1, 8)]
   slide = [pg.image.load(os.path.join('pygame\images', 'S1.png'))] + [pg.image.load(os.path.join('pygame\images', 'S2.png'))]*7 + [pg.image.load(os.path.join('pygame\images', f'S{x}.png')) for x in range(3,6)]
   fall =  pg.image.load(os.path.join('pygame\images', '0.png'))
   jumpList = [1]*6 + [2]*12 + [3]*12 + [4]*12 + [0]*25 + [-1]*6 + [-2]*12 + [-3]*12 + [-4]*12
 
-  def __init__(self, x, y, width, height, game):
+  def __init__(self, x, y, width, height, controller):
     super().__init__()
-    self.game = game
+    self.controller = controller
     self.x = x
     self.y = y
     self.width = width
@@ -23,6 +22,19 @@ class Player(object):
     self.jumpCount = 0
     self.runCount = 0
     self.slideUp = False
+
+    self.run = [pg.image.load(os.path.join('pygame\images', f'{x}.png')) for x in range(8, 16)]
+
+  def set_character(self, image, pos):
+    full_run = pg.image.load(os.path.join('pygame/images', image))
+    frame_width = full_run.get_width() // pos
+    frame_height = full_run.get_height()
+
+    animation_frames = []
+    for i in range(pos):
+      frame = full_run.subsurface(pg.Rect(i*frame_width, 0, frame_width, frame_height))
+      animation_frames.append(frame)
+    self.run = animation_frames
 
   def draw(self, win):
     if self.falling:
