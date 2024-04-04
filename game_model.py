@@ -6,6 +6,7 @@ class GameModel:
   def __init__(self, game):
     self.game = game
     self.player = game.player
+    self.WIDTH, self.HEIGHT = (800, 440)
     
     self.clock = pg.time.Clock()
 
@@ -26,7 +27,7 @@ class GameModel:
   def set_clock(self):
     self.clock.tick(self.speed)
 
-  def create_view(self, width=800, height=437, in_cap='Side Scroller'):
+  def create_view(self, width=800, height=440, in_cap='Side Scroller'):
     win = pg.display.set_mode((width,height))
     caption = pg.display.set_caption(in_cap)
     return (win, caption)

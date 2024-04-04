@@ -5,7 +5,8 @@ from score_model import Scoreboard
 from player_model import Player
 from end_view import EndScreen
 from obstacle_model import Saw, Spike
-from start_view import StartScreen
+from start_controller import Start
+
 import os
 import random
 
@@ -15,12 +16,11 @@ class Game:
     self.player = Player(200, 313, 64, 64, self) 
     self.scoreboard = Scoreboard(self)
     self.game_model = GameModel(self)
-    self.start_screen = StartScreen(self)
     self.obstacles = []
     
     self.run = False
     
-    self.play()
+    start = Start(self)
 
   def play(self):
     self.run = True
