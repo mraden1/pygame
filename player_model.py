@@ -1,16 +1,17 @@
-import  pygame as pg
+import pygame as pg
+from pygame.locals import *
+import os
 
-class player(pg.sprite.Sprite):
-  run = [ pg.image.load(os.path.join('images', f'{x}.png')) for x in range(8, 16)]
-  jump = [ pg.image.load(os.path.join('images', f'{x}.png')) for x in range(1, 8)]
-  slide = [ pg.image.load(os.path.join('images', 'S1.png'))] + [pg.image.load(os.path.join('images', 'S2.png'))]*7 +  [pg.image.load(os.path.join('images', f'S{x}.png')) for x in range(3,6)]
-  fall =  pg.image.load(os.path.join('images', '0.png'))
+class Player(object):
+  run = [pg.image.load(os.path.join('pygame\images', f'{x}.png')) for x in range(8, 16)]
+  jump = [pg.image.load(os.path.join('pygame\images', f'{x}.png')) for x in range(1, 8)]
+  slide = [pg.image.load(os.path.join('pygame\images', 'S1.png'))] + [pg.image.load(os.path.join('pygame\images', 'S2.png'))]*7 + [pg.image.load(os.path.join('pygame\images', f'S{x}.png')) for x in range(3,6)]
+  fall =  pg.image.load(os.path.join('pygame\images', '0.png'))
   jumpList = [1]*6 + [2]*12 + [3]*12 + [4]*12 + [0]*25 + [-1]*6 + [-2]*12 + [-3]*12 + [-4]*12
 
   def __init__(self, x, y, width, height, game):
     super().__init__()
     self.game = game
-    self.settings = game.settings
     self.x = x
     self.y = y
     self.width = width
@@ -46,7 +47,7 @@ class player(pg.sprite.Sprite):
       elif self.slideCount > 20 and self.slideCount < 80:
         self.hitbox = (self.x, self.y+3, self.width-8, self.height-35)
 
-      if self.slideCount >= 110:
+      elif self.slideCount >= 110:
         self.slideCount = 0
         self.runCount = 0
         self.slideUp = False

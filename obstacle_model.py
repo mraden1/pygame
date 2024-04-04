@@ -1,7 +1,8 @@
 import pygame as pg
+import os
 
 class Saw(pg.sprite.Sprite):
- rotate = [ pg.image.load(os.path.join('images', f'SAW{x}.png')) for x in range(4)] 
+ rotate = [ pg.image.load(os.path.join('pygame\images', f'SAW{x}.png')) for x in range(4)] 
 
  def __init__(self, x, y, width, height, game):
   super().__init__()
@@ -22,11 +23,11 @@ class Saw(pg.sprite.Sprite):
   self.rotateCount += 1
 
 
-class Spike(saw):
- img = pg.image.load(os.path.join('images', 'spike.png'))
+class Spike(Saw):
+ img = pg.image.load(os.path.join('pygame\images', 'spike.png'))
 
  def __init__(self, x, y, width, height, game):
-  super().__init(x, y, width, height, game)
+  super().__init__(x, y, width, height, game)
 
  def draw(self, win):
   self.hitbox = (self.x + 10, self.y, 28,315)
