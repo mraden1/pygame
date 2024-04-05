@@ -69,12 +69,8 @@ class GameModel:
 
     return (bg, bgX, bgX2, win)
 
-  def create_obstacle(self, obstacle1=None, obstacle2=None):
-    r = random.randint(0,1)
-    if r == 0:
+  def create_obstacle(self, obstacle1=None):
       return(obstacle1)
-    else:
-      return(obstacle2)
 
   def check_events(self, game, event):
     if event.type == pg.QUIT:
@@ -89,5 +85,4 @@ class GameModel:
 
       elif event.key == pg.K_DOWN:
         print('down presses')
-        if not (game.player_controller.player.sliding):
-          game.player_controller.player.sliding = True
+        

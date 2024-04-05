@@ -23,6 +23,8 @@ class Saw(pg.sprite.Sprite):
   self.rotateCount += 1
 
 
+#Was using when had
+'''
 class Spike(Saw):
  img = pg.image.load(os.path.join('pygame\images', 'spike.png'))
 
@@ -33,3 +35,4 @@ class Spike(Saw):
   self.hitbox = (self.x + 10, self.y, 28,315)
   pg.draw.rect(win, (255,0,0), self.hitbox, 2)
   win.blit(self.img, (self.x, self.y))
+  '''
