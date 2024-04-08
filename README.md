@@ -1,17 +1,11 @@
-# Side Scroller
+# Accelerating Side Scroller
 
-This is the code base for the side scroller tutorial videos posted on my YouTube channel. 
+launch the game by running game_controller module
+By: Mark Raden
+CWID: 88628683
 
-You can check out the tutorial videos here: https://www.youtube.com/watch?v=PjgLeP0G5Yw&t=53s
+*game controls*
+space bar attacks, up is jump. Other than that the game auto scrolls and you have to either attack or jump over the saw blades. There is a lot more I was working on but didnt get to it in time. I may have been over complicating it by implementing the MVC design.
 
-# Requirements
-- Python 3.x
-- pygame
-
-# Run in Gitpod
-
-You can also run Sudoku-GUI-Solver in Gitpod, a free online dev environment for GitHub:
-
-If you're intersted in a paid subscription with GitPod use the coupon code: TECHWITHTIM19
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/techwithtim/Side-Scroller-Game/blob/master/main.py)
+*Notes*
+I'm going to keep working on it because its clearly not finished. I was just beginning to implement the opponents and wanted to make the character fully controlled by the player instead of having the auto-running feature. I ended up losing my whole project last night right before it was due because of a corrupted USB drive, so i've spent the last 24 hours hammering this out. Its far from done. 

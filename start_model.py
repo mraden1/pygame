@@ -39,4 +39,3 @@ class StartModel:
       if self.exit_rect.collidepoint(event.pos):
         self.start.run = False
         pg.quit()
-        sys.exit()

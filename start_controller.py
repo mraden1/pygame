@@ -8,6 +8,7 @@ class Start:
     self.start_view = StartScreen(self.game, self)
     self.model = StartModel(self, game)
 
+  def running(self):
     self.run = True
     self.main_loop()
 

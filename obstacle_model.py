@@ -13,9 +13,10 @@ class Saw(pg.sprite.Sprite):
   self.height = height
   self.rotateCount = 0
   self.vel = 1.4
+  self.hitbox = pg.rect.Rect(0,0,0,0)
 
  def draw(self, win):
-  self.hitbox = (self.x + 10, self.y + 5, self.width - 20, self.height - 5)
+  self.hitbox = pg.rect.Rect(self.x + 10, self.y + 5, self.width - 20, self.height - 5)
   pg.draw.rect(win, (255,0,0), self.hitbox, 2)
   if self.rotateCount >= 8:
    self.rotateCount = 0

@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame.locals import *
+import random
 import os
 
 class Player(pg.sprite.Sprite):
@@ -15,9 +16,13 @@ class Player(pg.sprite.Sprite):
     self.walking = True
     self.running = False
     self.jumping = False
+    self.attacking = False
+    self.shootCount = 0
     self.jumpCount = 0
     self.runCount = 0
     self.walkCount = 0
+    self.attackCount = 0
+    self.hitbox = None
 
     self.local_actions = {'run': [],
                           'jump': [],
@@ -50,39 +55,59 @@ class Player(pg.sprite.Sprite):
       for i in range(rec_attack[f'attack{x}']['frames']):
         frame = attack.subsurface(pg.Rect(i*frame_width, 0, frame_width, frame_height))
         animation_frames.append(frame)
-      self.attack[f'attack{x}'] = animation_frames
+      self.attack[f'attack{x}'] = animation_frames.copy()
       animation_frames.clear()
 
 
-  def draw(self, win):
+  def draw(self, win, type=int):
 
     def jump_act(self, win):
       self.y -= self.jumpList[self.jumpCount] * 1.3
+      self.hitbox = self.local_actions['jump'][self.jumpCount//18].get_rect()
       win.blit(self.local_actions['jump'][self.jumpCount//18], (self.x, self.y))
       self.jumpCount += 1
       if self.jumpCount > 108:
         self.jumpCount = 0
         self.jumping = False
         self.runCount = 0
-      self.hitbox = (self.x+ 4, self.y, self.width-24, self.height-10)
+      self.hitbox = pg.rect.Rect(self.x+(self.width//2), self.y+50, self.hitbox[2]//2, self.hitbox[3]//2)
+
+      pg.draw.rect(win, (255,0,0), self.hitbox, 2)
 
     def walk_act(self, win):
       if self.walkCount > 42:
         self.walkCount = 0
+      self.hitbox = self.local_actions['walk'][self.walkCount//6].get_rect()
       win.blit(self.local_actions['walk'][self.walkCount//6], (self.x, self.y))
       self.walkCount += 1
-      self.hitbox = (self.x+4, self.y, self.width, self.height)
+      self.hitbox = pg.rect.Rect(self.x+(self.width//2), self.y+50, self.hitbox[2]//2, self.hitbox[3]//2)
 
       pg.draw.rect(win, (255,0,0), self.hitbox, 2)
 
     def run_act(self, win):
       if self.runCount > 42:
         self.runCount = 0
-      win.blit(self.self.local_actions['run'][self.runCount//6], (self.x,self.y))
+      self.hitbox = self.local_actions['run'][self.runCount//6].get_rect()
+      win.blit(self.local_actions['run'][self.runCount//6], (self.x,self.y))
       self.runCount += 1
-      self.hitbox = (self.x+ 4, self.y, self.width-24, self.height-13)
+      self.hitbox = pg.rect.Rect(self.x+(self.width//2), self.y+50, self.hitbox[2]//2, self.hitbox[3]//2)
 
-      pg.draw.rect(win, (255,0,0),self.hitbox, 2)
+      pg.draw.rect(win, (255,0,0), self.hitbox, 2)
+
+    def attack(self, win, type=None):
+      if self.attackCount > 4:
+        self.walking = True
+        self.attacking = False
+        self.attackCount = 0
+        return
+      if self.attackCount == 1:
+        self.controller.game.sound.samurai.play()
+      self.hitbox = self.attack[f'attack{type}'][self.attackCount].get_rect()
+      win.blit(self.attack[f'attack{type}'][self.attackCount], (self.x,self.y))
+      self.attackCount += 1
+      self.hitbox = pg.rect.Rect(self.x+(self.width//2), self.y+50, self.hitbox[2]//2, self.hitbox[3]//2)
+
+      pg.draw.rect(win, (255,0,0), self.hitbox, 2)
     
 
     if self.jumping:
@@ -91,3 +116,5 @@ class Player(pg.sprite.Sprite):
       walk_act(self, win)
     elif self.running:
       run_act(self, win)
+    elif self.attacking:
+      attack(self, win, random.randint(1,3))

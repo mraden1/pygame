@@ -5,7 +5,7 @@ class PlayerController:
   def __init__(self, game):
     super().__init__()
     self.game = game
-    self.player = Player(200, 310, 64, 64, self)
+    self.player = Player(200, 240, 64, 64, self)
 
     run = {'images': 'run_samurai.png', 'frames': 8}
     jump = {'images': 'jump_samurai.png', 'frames': 9}
@@ -20,4 +20,10 @@ class PlayerController:
     self.player.set_character(collection, attack)
 
   def update(self, win):
-    self.player.draw(win)
+    if self.game.game_model.speed > 60 and self.player.walking:
+      self.player.walking = False
+      self.player.running = True
+    if self.player.attacking:
+      self.player.draw(win)
+    else:
+      self.player.draw(win)

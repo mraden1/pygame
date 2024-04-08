@@ -7,6 +7,7 @@ class GameModel:
     self.game = game
     self.player = game.player_controller
     self.WIDTH, self.HEIGHT = (800, 440)
+    self.lives = 3
     
     self.clock = pg.time.Clock()
 
@@ -55,6 +56,26 @@ class GameModel:
     bgX2 = bg.get_width()
     return (bg, bgX, bgX2)
 
+  def check_collision(self, player, obstacle):
+    if player.hitbox.colliderect(obstacle.hitbox):
+      if player.attacking == True:
+        print('obstacle killed')
+        self.game.obstacles.pop(self.game.obstacles.index(obstacle))
+        obstacle.kill()
+        self.game.scoreboard.score += 100
+      else:
+        print('player hit')
+        self.game.scoreboard.updateFile()
+        self.game.scoreboard.score = 0
+        if self.lives == 0:
+          print('endscreen')
+          self.game.run = False
+          self.game.end_screen.end_screen(self.game.scoreboard.score, self.win, self.WIDTH, self.HEIGHT)
+        else:
+          self.lives -= 1
+      return True
+    return False
+
   def manage_bg(self, bg=None, bgX=None, bgX2=None, win=None):
     bgX -= 1.4
     bgX2 -= 1.4
@@ -78,11 +99,15 @@ class GameModel:
       pg.quit()
       quit()
     elif event.type == pg.KEYDOWN:
-      if event.key == pg.K_SPACE or event.key == pg.K_UP:
+      if event.key == event.key == pg.K_UP:
         print('up or space pressed')
         if not (game.player_controller.player.jumping):
           game.player_controller.player.jumping = True
 
-      elif event.key == pg.K_DOWN:
+      elif event.key == pg.K_SPACE:
         print('down presses')
+        if not (game.player_controller.player.attacking):
+          game.player_controller.player.walking = False
+          game.player_controller.player.running = False
+          game.player_controller.player.attacking = True
         
